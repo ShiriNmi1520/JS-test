@@ -1,4 +1,5 @@
 // 6. How many days of work needed to done all tasks ? // => 1 day = 9:00 to 00:00 between 00:00 and 09:00 doesnt count.
+const external = require('./quizSolve4');
 
 const tasks = [
   {id: 1, title: "task01", duration: 60},
@@ -18,15 +19,21 @@ const tasks = [
   {id: 15, title: "task15", duration: 900}
 ];
 
+const employeeType = [
+  {id: 1, "name": "FullTime", work_begin: "09:00:00", work_end: "17:00:00"},
+  {id: 2, "name": "MidTime", work_begin: "12:00:00", work_end: "21:00:00"},
+  {id: 3, "name": "HalfTime", work_begin: "20:00:00", work_end: "00:00:00"},
+];
+
 function calculateWorkingDaysNeeded() {
   //convert tasks minutes to hours
   let workHoursNeed = 0;
   let workDaysNeed;
   tasks.forEach((content) => {
-    content['duration'] = content['duration'] % 60 === 0 ? content['duration'] / 60 : Math.ceil(content['duration'] / 60 );
+    content['duration'] = content['duration'] % 60 === 0 ? content['duration'] / 60 : Math.ceil(content['duration'] / 60);
     workHoursNeed += content['duration'];
   })
-  workDaysNeed = Math.ceil(workHoursNeed / 15);
+  workDaysNeed = Math.ceil(workHoursNeed / external.countWorksHour(employeeType));
   console.log("It takes %d days to complete all tasks.", workDaysNeed);
 }
 
